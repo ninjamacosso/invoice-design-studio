@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, GitBranch, CheckSquare, BarChart3, Settings, HelpCircle, Sparkles } from "lucide-react";
+import { LayoutDashboard, Users, GitBranch, CheckSquare, BarChart3, Settings, HelpCircle, Sparkles, Bot } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
@@ -10,6 +10,7 @@ const mainItems = [
   { key: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { key: "contacts", label: "Contactos", icon: Users, badge: "248" },
   { key: "pipeline", label: "Pipeline", icon: GitBranch },
+  { key: "outreach", label: "Outreach IA", icon: Bot, badge: "3" },
   { key: "tasks", label: "Tarefas", icon: CheckSquare, badge: "5" },
   { key: "reports", label: "Relatórios", icon: BarChart3 },
 ];
