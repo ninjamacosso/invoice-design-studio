@@ -68,12 +68,8 @@ const Index = () => {
               <RevenueChart />
             </>
           )}
-          {(view === "settings" || view === "help") && (
-            <div className="text-center py-20 text-muted-foreground">
-              <p className="font-display text-2xl mb-2">{titles[view]}</p>
-              <p className="text-sm">Esta secção está em desenvolvimento.</p>
-            </div>
-          )}
+          {view === "settings" && <SettingsSection />}
+          {view === "help" && <HelpSection />}
         </div>
       </main>
 
