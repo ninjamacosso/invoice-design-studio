@@ -1,5 +1,6 @@
-import { LayoutDashboard, Users, GitBranch, CheckSquare, BarChart3, Settings, HelpCircle, Sparkles, Bot } from "lucide-react";
+import { LayoutDashboard, Users, GitBranch, CheckSquare, BarChart3, Settings, HelpCircle, Sparkles, Bot, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
 
 interface SidebarProps {
   active: string;
@@ -21,6 +22,15 @@ const settingsItems = [
 ];
 
 export const Sidebar = ({ active, onChange }: SidebarProps) => {
+  const { profile, roles, signOut } = useAuth();
+  const initials = (profile?.full_name || profile?.email || "U")
+    .split(" ")
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+  const roleLabel = roles.includes("admin") ? "Administrador" : roles.includes("manager") ? "Gestor" : "Agente";
+
   return (
     <aside className="hidden lg:flex w-64 flex-col gradient-sidebar text-sidebar-foreground h-screen sticky top-0 border-r border-sidebar-border">
       <div className="p-6 border-b border-sidebar-border">
@@ -91,13 +101,20 @@ export const Sidebar = ({ active, onChange }: SidebarProps) => {
         </div>
       </nav>
 
-      <div className="p-4 border-t border-sidebar-border">
-        <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-sidebar-accent transition-colors cursor-pointer">
-          <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-white font-bold text-sm">JM</div>
+      <div className="p-4 border-t border-sidebar-border space-y-2">
+        <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-sidebar-accent transition-colors">
+          <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-white font-bold text-sm">{initials}</div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-white truncate">João Martins</p>
-            <p className="text-xs text-sidebar-foreground/60 truncate">Administrador</p>
+            <p className="text-sm font-semibold text-white truncate">{profile?.full_name || "Utilizador"}</p>
+            <p className="text-xs text-sidebar-foreground/60 truncate">{roleLabel}</p>
           </div>
+          <button
+            onClick={signOut}
+            title="Sair"
+            className="p-2 rounded-md text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-white transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </aside>
