@@ -9,6 +9,8 @@ import { PipelineBoard } from "@/components/crm/PipelineBoard";
 import { TasksSection } from "@/components/crm/TasksSection";
 import { ReportsSection } from "@/components/crm/ReportsSection";
 import { OutreachSection } from "@/components/crm/OutreachSection";
+import { SettingsSection } from "@/components/crm/SettingsSection";
+import { HelpSection } from "@/components/crm/HelpSection";
 import { NewContactDialog } from "@/components/crm/NewContactDialog";
 import { NotificationsPanel } from "@/components/crm/NotificationsPanel";
 
@@ -66,12 +68,8 @@ const Index = () => {
               <RevenueChart />
             </>
           )}
-          {(view === "settings" || view === "help") && (
-            <div className="text-center py-20 text-muted-foreground">
-              <p className="font-display text-2xl mb-2">{titles[view]}</p>
-              <p className="text-sm">Esta secção está em desenvolvimento.</p>
-            </div>
-          )}
+          {view === "settings" && <SettingsSection />}
+          {view === "help" && <HelpSection />}
         </div>
       </main>
 
