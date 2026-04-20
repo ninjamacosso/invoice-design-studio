@@ -8,6 +8,7 @@ import { ContactsTable } from "@/components/crm/ContactsTable";
 import { PipelineBoard } from "@/components/crm/PipelineBoard";
 import { TasksSection } from "@/components/crm/TasksSection";
 import { ReportsSection } from "@/components/crm/ReportsSection";
+import { OutreachSection } from "@/components/crm/OutreachSection";
 import { NewContactDialog } from "@/components/crm/NewContactDialog";
 import { NotificationsPanel } from "@/components/crm/NotificationsPanel";
 
@@ -15,6 +16,7 @@ const titles: Record<string, string> = {
   dashboard: "Dashboard",
   contacts: "Contactos",
   pipeline: "Pipeline",
+  outreach: "Outreach IA",
   tasks: "Tarefas",
   reports: "Relatórios",
   settings: "Definições",
@@ -55,6 +57,7 @@ const Index = () => {
 
           {view === "contacts" && <ContactsTable onAdd={() => setNewContactOpen(true)} />}
           {view === "pipeline" && <PipelineBoard />}
+          {view === "outreach" && <OutreachSection />}
           {view === "tasks" && <TasksSection />}
           {view === "reports" && (
             <>
