@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,7 +44,10 @@ const Auth = () => {
       return;
     }
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword(parsed.data);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: parsed.data.email,
+      password: parsed.data.password,
+    });
     setLoading(false);
     if (error) {
       if (error.message.includes("Invalid login credentials")) {
@@ -90,13 +94,16 @@ const Auth = () => {
 
   const handleGoogle = async () => {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: `${window.location.origin}/` },
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: `${window.location.origin}/`,
     });
-    if (error) {
+    if (result.error) {
       setLoading(false);
-      toast.error(error.message);
+      toast.error(result.error.message);
+      return;
+    }
+    if (!("redirected" in result && result.redirected)) {
+      navigate("/", { replace: true });
     }
   };
 
