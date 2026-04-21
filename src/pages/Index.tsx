@@ -11,6 +11,10 @@ import { ReportsSection } from "@/components/crm/ReportsSection";
 import { OutreachSection } from "@/components/crm/OutreachSection";
 import { SettingsSection } from "@/components/crm/SettingsSection";
 import { HelpSection } from "@/components/crm/HelpSection";
+import { InboxSection } from "@/components/crm/InboxSection";
+import { SocialManagerSection } from "@/components/crm/SocialManagerSection";
+import { CreativeStudioSection } from "@/components/crm/CreativeStudioSection";
+import { BulkMessagingSection } from "@/components/crm/BulkMessagingSection";
 import { NewContactDialog } from "@/components/crm/NewContactDialog";
 import { NotificationsPanel } from "@/components/crm/NotificationsPanel";
 
@@ -18,6 +22,10 @@ const titles: Record<string, string> = {
   dashboard: "Dashboard",
   contacts: "Contactos",
   pipeline: "Pipeline",
+  inbox: "Inbox Multicanal",
+  social: "Social Manager",
+  creative: "Creative Studio IA",
+  bulk: "Bulk Messaging",
   outreach: "Outreach IA",
   tasks: "Tarefas",
   reports: "Relatórios",
@@ -59,6 +67,10 @@ const Index = () => {
 
           {view === "contacts" && <ContactsTable onAdd={() => setNewContactOpen(true)} />}
           {view === "pipeline" && <PipelineBoard />}
+          {view === "inbox" && <InboxSection />}
+          {view === "social" && <SocialManagerSection />}
+          {view === "creative" && <CreativeStudioSection />}
+          {view === "bulk" && <BulkMessagingSection />}
           {view === "outreach" && <OutreachSection />}
           {view === "tasks" && <TasksSection />}
           {view === "reports" && (
