@@ -6,18 +6,19 @@ interface TopbarProps {
   title: string;
   onNewContact: () => void;
   onToggleNotifications: () => void;
+  onToggleMobileNav?: () => void;
   notificationCount: number;
 }
 
-export const Topbar = ({ title, onNewContact, onToggleNotifications, notificationCount }: TopbarProps) => {
+export const Topbar = ({ title, onNewContact, onToggleNotifications, onToggleMobileNav, notificationCount }: TopbarProps) => {
   return (
     <header className="sticky top-0 z-30 bg-background/80 backdrop-blur-xl border-b border-border">
       <div className="flex items-center justify-between gap-4 px-4 sm:px-8 py-4">
-        <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" className="lg:hidden">
+        <div className="flex items-center gap-3 min-w-0">
+          <Button variant="ghost" size="icon" className="lg:hidden" onClick={onToggleMobileNav} aria-label="Abrir menu">
             <Menu className="w-5 h-5" />
           </Button>
-          <h2 className="font-display text-2xl sm:text-3xl font-bold">{title}</h2>
+          <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold truncate">{title}</h2>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
@@ -26,7 +27,7 @@ export const Topbar = ({ title, onNewContact, onToggleNotifications, notificatio
             <Input placeholder="Pesquisar contactos, negócios..." className="pl-10 w-64 lg:w-80 bg-card" />
           </div>
 
-          <Button variant="outline" size="icon" className="relative" onClick={onToggleNotifications}>
+          <Button variant="outline" size="icon" className="relative" onClick={onToggleNotifications} aria-label="Notificações">
             <Bell className="w-4 h-4" />
             {notificationCount > 0 && (
               <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-destructive text-destructive-foreground text-[10px] font-bold flex items-center justify-center">

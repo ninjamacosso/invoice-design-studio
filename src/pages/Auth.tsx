@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
@@ -109,6 +110,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 p-4">
+      <SEO title="Entrar — NexCRM | CRM com IA" description="Acede ao NexCRM: pipeline, inbox multicanal e IA criativa numa só plataforma." canonical={`${window.location.origin}/auth`} />
       <div className="w-full max-w-md space-y-6 animate-fade-in">
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 mb-2">
@@ -156,6 +158,9 @@ const Auth = () => {
                       required
                     />
                   </div>
+                </div>
+                <div className="flex justify-end">
+                  <Link to="/reset-password" className="text-xs text-primary hover:underline">Esqueci-me da password</Link>
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Entrar"}

@@ -17,6 +17,7 @@ import { CreativeStudioSection } from "@/components/crm/CreativeStudioSection";
 import { BulkMessagingSection } from "@/components/crm/BulkMessagingSection";
 import { NewContactDialog } from "@/components/crm/NewContactDialog";
 import { NotificationsPanel } from "@/components/crm/NotificationsPanel";
+import { SEO } from "@/components/SEO";
 
 const titles: Record<string, string> = {
   dashboard: "Dashboard",
@@ -37,16 +38,21 @@ const Index = () => {
   const [view, setView] = useState("dashboard");
   const [newContactOpen, setNewContactOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const currentTitle = titles[view] || "Dashboard";
 
   return (
     <div className="min-h-screen flex bg-background">
-      <Sidebar active={view} onChange={setView} />
+      <SEO title={`${currentTitle} — NexCRM`} description="CRM com IA: pipeline, inbox multicanal, criação de imagens e campanhas em massa." />
+      <Sidebar active={view} onChange={setView} mobileOpen={mobileNavOpen} onMobileOpenChange={setMobileNavOpen} />
 
       <main className="flex-1 min-w-0">
         <Topbar
-          title={titles[view] || "Dashboard"}
+          title={currentTitle}
           onNewContact={() => setNewContactOpen(true)}
           onToggleNotifications={() => setNotifOpen(true)}
+          onToggleMobileNav={() => setMobileNavOpen(true)}
           notificationCount={4}
         />
 
