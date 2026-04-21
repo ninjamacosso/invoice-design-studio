@@ -1,10 +1,13 @@
 import { LayoutDashboard, Users, GitBranch, CheckSquare, BarChart3, Settings, HelpCircle, Sparkles, Bot, LogOut, Share2, Inbox, Wand2, Megaphone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 interface SidebarProps {
   active: string;
   onChange: (key: string) => void;
+  mobileOpen?: boolean;
+  onMobileOpenChange?: (open: boolean) => void;
 }
 
 const mainItems = [
@@ -25,7 +28,7 @@ const settingsItems = [
   { key: "help", label: "Ajuda", icon: HelpCircle },
 ];
 
-export const Sidebar = ({ active, onChange }: SidebarProps) => {
+export const Sidebar = ({ active, onChange, mobileOpen, onMobileOpenChange }: SidebarProps) => {
   const { profile, roles, signOut } = useAuth();
   const initials = (profile?.full_name || profile?.email || "U")
     .split(" ")
@@ -35,8 +38,13 @@ export const Sidebar = ({ active, onChange }: SidebarProps) => {
     .toUpperCase();
   const roleLabel = roles.includes("admin") ? "Administrador" : roles.includes("manager") ? "Gestor" : "Agente";
 
-  return (
-    <aside className="hidden lg:flex w-64 flex-col gradient-sidebar text-sidebar-foreground h-screen sticky top-0 border-r border-sidebar-border">
+  const handleNav = (key: string) => {
+    onChange(key);
+    onMobileOpenChange?.(false);
+  };
+
+  const Content = (
+    <>
       <div className="p-6 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-glow">
@@ -59,7 +67,7 @@ export const Sidebar = ({ active, onChange }: SidebarProps) => {
               return (
                 <li key={item.key}>
                   <button
-                    onClick={() => onChange(item.key)}
+                    onClick={() => handleNav(item.key)}
                     className={cn(
                       "w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
                       isActive
@@ -92,7 +100,7 @@ export const Sidebar = ({ active, onChange }: SidebarProps) => {
               return (
                 <li key={item.key}>
                   <button
-                    onClick={() => onChange(item.key)}
+                    onClick={() => handleNav(item.key)}
                     className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-white transition-all"
                   >
                     <Icon className="w-4 h-4" />
@@ -115,12 +123,26 @@ export const Sidebar = ({ active, onChange }: SidebarProps) => {
           <button
             onClick={signOut}
             title="Sair"
+            aria-label="Sair"
             className="p-2 rounded-md text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-white transition-colors"
           >
             <LogOut className="w-4 h-4" />
           </button>
         </div>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      <aside className="hidden lg:flex w-64 flex-col gradient-sidebar text-sidebar-foreground h-screen sticky top-0 border-r border-sidebar-border">
+        {Content}
+      </aside>
+      <Sheet open={mobileOpen} onOpenChange={onMobileOpenChange}>
+        <SheetContent side="left" className="p-0 w-72 gradient-sidebar text-sidebar-foreground border-sidebar-border [&>button]:text-white">
+          <div className="flex flex-col h-full">{Content}</div>
+        </SheetContent>
+      </Sheet>
+    </>
   );
 };
