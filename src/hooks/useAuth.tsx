@@ -39,6 +39,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     ]);
     setProfile(prof as Profile | null);
     setRoles((r ?? []).map((x: { role: AppRole }) => x.role));
+    // Seed demo data on first login (no-op if data exists)
+    (supabase.rpc as unknown as (fn: string) => Promise<unknown>)("seed_demo_data").catch(() => {});
   };
 
   useEffect(() => {
