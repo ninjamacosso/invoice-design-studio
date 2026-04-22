@@ -39,6 +39,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     ]);
     setProfile(prof as Profile | null);
     setRoles((r ?? []).map((x: { role: AppRole }) => x.role));
+    // Seed demo data on first login (no-op if data exists)
+    // @ts-expect-error rpc not in generated types yet
+    supabase.rpc("seed_demo_data").then(() => {});
   };
 
   useEffect(() => {
