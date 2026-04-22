@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { useContacts, useContactMutations, type Contact } from "@/hooks/useCRM";
 import { useConversationMutations } from "@/hooks/useCRM";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useNavigate } from "react-router-dom";
+
 
 const statusVariant: Record<string, string> = {
   customer: "bg-success/15 text-success hover:bg-success/20",
